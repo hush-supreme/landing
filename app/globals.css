@@ -44,26 +44,3 @@ body {
   opacity: 0;
   animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
-/* Blob idle — asymmetric wobble so it feels alive */
-@keyframes blob-float {
-  0% {
-    transform: scale(1, 1) rotate(0deg);
-  }
-  20% {
-    transform: scale(0.96, 1.04) rotate(-1.5deg);
-  }
-  45% {
-    transform: scale(1.03, 0.97) rotate(1deg);
-  }
-  70% {
-    transform: scale(0.97, 1.03) rotate(-0.5deg);
-  }
-  100% {
-    transform: scale(1, 1) rotate(0deg);
-  }
-}
-
-.animate-blob-float {
-  animation: blob-float 3s ease-in-out infinite;
-}

@@ -6,7 +6,7 @@ export default function Home() {
       <main className="flex max-w-3xl flex-col items-center gap-4 text-center">
         {/* Blob + wordmark lockup */}
         <div className="animate-fade-up flex flex-row items-center gap-4 sm:gap-6">
-          <div className="animate-blob-float size-32 sm:size-40 lg:size-48">
+          <div className="size-32 -translate-y-10 sm:size-40 lg:size-48">
             <HushBlob className="size-full" />
           </div>
           <h1 className="text-[7rem] font-bold tracking-tighter text-foreground sm:text-[10rem] lg:text-[12rem]">
