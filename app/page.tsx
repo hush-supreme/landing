@@ -1,6 +1,27 @@
-import { HushBlob } from "./components/hush-blob";
+import { HushBlob } from "@landing/app/components/hush-blob";
+import type { ReactNode } from "react";
 
-export default function Home() {
+function ArrowRightIcon(): ReactNode {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3 8h10m0 0L9 4m4 4L9 12"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export default function Home(): ReactNode {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center px-6">
       <main className="flex max-w-3xl flex-col items-center gap-4 text-center">
@@ -36,21 +57,7 @@ export default function Home() {
           style={{ animationDelay: "300ms" }}
         >
           Get Early Access
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8h10m0 0L9 4m4 4L9 12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ArrowRightIcon />
         </a>
       </main>
     </div>
