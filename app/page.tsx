@@ -1,34 +1,39 @@
+import { HushBlob } from "./components/hush-blob";
+
 export default function Home() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center px-6">
-      <main className="flex max-w-xl flex-col items-center gap-8 text-center">
-        <h1
-          className="text-8xl font-bold tracking-tighter text-foreground sm:text-9xl"
-          style={{ animationDelay: "0ms" }}
-        >
-          hush
-        </h1>
+      <main className="flex max-w-3xl flex-col items-center gap-4 text-center">
+        {/* Blob + wordmark lockup */}
+        <div className="animate-fade-up flex flex-row items-center gap-4 sm:gap-6">
+          <div className="animate-blob-float size-32 sm:size-40 lg:size-48">
+            <HushBlob className="size-full" />
+          </div>
+          <h1 className="text-[7rem] font-bold tracking-tighter text-foreground sm:text-[10rem] lg:text-[12rem]">
+            hush
+          </h1>
+        </div>
 
         <p
-          className="max-w-md text-xl leading-relaxed text-muted sm:text-2xl"
-          style={{ animationDelay: "120ms" }}
+          className="animate-fade-up text-lg text-pink-dim sm:text-xl"
+          style={{ animationDelay: "150ms" }}
         >
-          No willpower required&nbsp;&mdash; just physics.
+          A boundary your phone can&rsquo;t bypass.
         </p>
 
         <p
-          className="max-w-sm text-base leading-relaxed text-muted/70"
-          style={{ animationDelay: "240ms" }}
+          className="animate-fade-up max-w-sm text-base leading-relaxed text-muted"
+          style={{ animationDelay: "250ms" }}
         >
-          An NFC token you keep out of reach. Tap to lock your apps. Tap again
-          to unlock. The friction is real&nbsp;&mdash; and that&rsquo;s the
-          point.
+          Tap to lock your apps. Tap again to unlock.
+          <br />
+          The rest of your time is yours.
         </p>
 
         <a
-          href="https://gethush.io"
-          className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-8 py-3.5 text-sm font-semibold tracking-wide text-background transition-all hover:bg-accent-dim hover:shadow-[0_0_24px_rgba(74,222,128,0.25)]"
-          style={{ animationDelay: "400ms" }}
+          href="https://www.hushscreentime.com/"
+          className="animate-fade-up mt-2 inline-flex items-center gap-2 rounded-full bg-pink px-8 py-3.5 text-sm font-semibold tracking-wide text-background transition-all hover:brightness-110"
+          style={{ animationDelay: "300ms" }}
         >
           Get Early Access
           <svg
