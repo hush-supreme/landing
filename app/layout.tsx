@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import type { ReactNode } from "react";
 
 import "./globals.css";
@@ -38,7 +39,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps): ReactNode {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} antialiased`}>{children}</body>
+      <body className={`${nunito.variable} antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
