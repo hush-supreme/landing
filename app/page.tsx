@@ -819,21 +819,21 @@ function FooterSection(): ReactNode {
         <footer className="mx-auto mt-32 flex max-w-4xl flex-col items-center gap-6 border-t border-foreground/[0.06] pt-8">
           <div className="flex items-center gap-6 text-sm text-muted">
             <a
-              href="https://www.hushscreentime.com/"
-              className="transition-colors hover:text-foreground"
-            >
-              Website
-            </a>
-            <span className="text-foreground/10">|</span>
-            <a
-              href="https://www.hushscreentime.com/"
+              href="/privacy"
               className="transition-colors hover:text-foreground"
             >
               Privacy
             </a>
             <span className="text-foreground/10">|</span>
             <a
-              href="https://www.hushscreentime.com/"
+              href="/impressum"
+              className="transition-colors hover:text-foreground"
+            >
+              Impressum
+            </a>
+            <span className="text-foreground/10">|</span>
+            <a
+              href="mailto:hi@hushscreentime.com"
               className="transition-colors hover:text-foreground"
             >
               Contact
