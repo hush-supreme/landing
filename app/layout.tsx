@@ -14,6 +14,21 @@ export const metadata: Metadata = {
   title: "Hush — NFC-Powered Focus Mode",
   description:
     "No willpower required — just physics. Hush uses NFC tokens to create real, physical friction that stops mindless scrolling.",
+  metadataBase: new URL("https://www.hushscreentime.com"),
+  openGraph: {
+    title: "Hush — NFC-Powered Focus Mode",
+    description:
+      "Tap to lock your apps. Tap again to unlock. The rest of your time is yours.",
+    siteName: "Hush",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hush — NFC-Powered Focus Mode",
+    description:
+      "A boundary your phone can't bypass. Physical friction that stops mindless scrolling.",
+  },
 };
 
 interface RootLayoutProps {
