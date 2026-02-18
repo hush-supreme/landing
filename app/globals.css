@@ -1,26 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --muted: #8a8a8a;
+  --background: #142e07;
+  --background-light: #1a3b0d;
+  --background-card: #1f4a12;
+  --foreground: #f8ffef;
+  --muted: #8aad78;
+  --accent: #84c997;
   --pink: #edb6d4;
   --pink-dim: #d49ab8;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-light: var(--background-light);
+  --color-background-card: var(--background-card);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-accent: var(--accent);
   --color-pink: var(--pink);
   --color-pink-dim: var(--pink-dim);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-nunito);
+}
+
+* {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-nunito), system-ui, sans-serif;
 }
 
 /* Fade-up entrance (stagger via animationDelay in components) */
@@ -38,4 +48,43 @@ body {
 .animate-fade-up {
   opacity: 0;
   animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subtle grain overlay for texture */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  z-index: 50;
+}
+
+/* Glow effect for token section */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Step connector line */
+.step-line {
+  background: linear-gradient(
+    to bottom,
+    var(--accent),
+    transparent
+  );
 }
