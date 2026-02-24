@@ -2,7 +2,8 @@ import { supabase } from "@landing/app/lib/supabase";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const { email } = await request.json();
+  const { email, firstName, lastName, referralSource, basedInEurope } =
+    await request.json();
 
   if (!email || typeof email !== "string") {
     return NextResponse.json(
@@ -23,7 +24,21 @@ export async function POST(request: Request) {
 
   const { error } = await supabase
     .from("waitlist")
-    .insert({ email: normalizedEmail });
+    .insert({
+      email: normalizedEmail,
+      ...(firstName && typeof firstName === "string" && {
+        first_name: firstName.trim(),
+      }),
+      ...(lastName && typeof lastName === "string" && {
+        last_name: lastName.trim(),
+      }),
+      ...(referralSource && typeof referralSource === "string" && {
+        referral_source: referralSource,
+      }),
+      ...(basedInEurope && typeof basedInEurope === "string" && {
+        based_in_europe: basedInEurope,
+      }),
+    });
 
   if (error) {
     // Unique constraint violation = already signed up

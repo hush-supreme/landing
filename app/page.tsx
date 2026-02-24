@@ -68,6 +68,26 @@ function ArrowRightIcon(): ReactNode {
   );
 }
 
+function ChevronDownIcon(): ReactNode {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 6l4 4 4-4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function NfcIcon(): ReactNode {
   return (
     <svg
@@ -91,12 +111,19 @@ function NfcIcon(): ReactNode {
 
 // ── Waitlist Form ──────────────────────────────────────────
 
+const inputClass =
+  "w-full rounded-xl border border-foreground/[0.08] bg-background-light px-4 py-3 text-sm text-foreground placeholder-muted/40 outline-none transition-colors focus:border-accent/30";
+
 function WaitlistForm({
   large = false,
 }: {
   large?: boolean;
 }): ReactNode {
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [referralSource, setReferralSource] = useState("");
+  const [basedInEurope, setBasedInEurope] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -112,7 +139,13 @@ function WaitlistForm({
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          ...(firstName.trim() && { firstName: firstName.trim() }),
+          ...(lastName.trim() && { lastName: lastName.trim() }),
+          ...(referralSource && { referralSource }),
+          ...(basedInEurope && { basedInEurope }),
+        }),
       });
 
       const data = await res.json();
@@ -121,6 +154,10 @@ function WaitlistForm({
         setStatus("success");
         setMessage(data.message);
         setEmail("");
+        setFirstName("");
+        setLastName("");
+        setReferralSource("");
+        setBasedInEurope("");
       } else {
         setStatus("error");
         setMessage(data.error || "Something went wrong.");
@@ -162,28 +199,89 @@ function WaitlistForm({
           <motion.form
             key="form"
             onSubmit={handleSubmit}
-            className={`flex w-full items-center gap-2 rounded-full border border-foreground/[0.08] bg-background-light p-1.5 transition-colors focus-within:border-accent/30 ${
-              large ? "sm:p-2" : ""
-            }`}
+            className="flex w-full flex-col gap-3"
           >
+            {/* First name + Last name */}
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                type="text"
+                placeholder="First name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className={inputClass}
+                autoComplete="given-name"
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className={inputClass}
+                autoComplete="family-name"
+              />
+            </div>
+
+            {/* Email */}
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Email *"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 if (status === "error") setStatus("idle");
               }}
               required
-              className={`min-w-0 flex-1 bg-transparent px-4 text-foreground placeholder-muted/60 outline-none ${
-                large ? "text-base" : "text-sm"
-              }`}
+              className={inputClass}
+              autoComplete="email"
             />
+
+            {/* How did you hear about us? */}
+            <div className="relative">
+              <select
+                value={referralSource}
+                onChange={(e) => setReferralSource(e.target.value)}
+                className={`${inputClass} appearance-none cursor-pointer pr-10 ${
+                  !referralSource ? "text-muted/40" : "text-foreground"
+                }`}
+              >
+                <option value="">How did you hear about us?</option>
+                <option value="instagram">Instagram</option>
+                <option value="reddit">Reddit</option>
+                <option value="google">Google</option>
+                <option value="tiktok">TikTok</option>
+                <option value="friends">Friends / Word of Mouth</option>
+                <option value="other">Other</option>
+              </select>
+              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted/40">
+                <ChevronDownIcon />
+              </div>
+            </div>
+
+            {/* Are you based in Europe? */}
+            <div className="relative">
+              <select
+                value={basedInEurope}
+                onChange={(e) => setBasedInEurope(e.target.value)}
+                className={`${inputClass} appearance-none cursor-pointer pr-10 ${
+                  !basedInEurope ? "text-muted/40" : "text-foreground"
+                }`}
+              >
+                <option value="">Are you based in Europe?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+                <option value="prefer_not_to_say">Prefer not to say</option>
+              </select>
+              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted/40">
+                <ChevronDownIcon />
+              </div>
+            </div>
+
+            {/* Submit */}
             <button
               type="submit"
               disabled={status === "loading"}
-              className={`group inline-flex shrink-0 items-center gap-2 rounded-full bg-pink font-bold tracking-wide text-background transition-all duration-300 hover:shadow-[0_0_40px_rgba(237,182,212,0.25)] active:scale-[0.97] disabled:opacity-60 ${
-                large ? "px-7 py-3 text-sm" : "px-5 py-2.5 text-xs"
+              className={`group mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-pink font-bold tracking-wide text-background transition-all duration-300 hover:shadow-[0_0_40px_rgba(237,182,212,0.25)] active:scale-[0.97] disabled:opacity-60 ${
+                large ? "py-3.5 text-sm" : "py-3 text-xs"
               }`}
             >
               {status === "loading" ? (
@@ -272,9 +370,23 @@ function HeroSection(): ReactNode {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-4 w-full max-w-md"
+          className="mt-4"
         >
-          <WaitlistForm />
+          <a
+            href="#waitlist"
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("waitlist")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="group inline-flex items-center gap-2 rounded-full bg-pink px-7 py-3.5 text-sm font-bold tracking-wide text-background transition-all duration-300 hover:shadow-[0_0_40px_rgba(237,182,212,0.25)] active:scale-[0.97]"
+          >
+            Join Waitlist
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+              <ArrowRightIcon />
+            </span>
+          </a>
         </motion.div>
       </div>
 
@@ -780,7 +892,7 @@ function FeaturesSection(): ReactNode {
 
 function FooterSection(): ReactNode {
   return (
-    <section className="relative px-6 pb-16 pt-32 sm:pt-40">
+    <section id="waitlist" className="relative px-6 pb-16 pt-32 sm:pt-40">
       {/* Background glow */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute bottom-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-pink/[0.04] blur-[120px]" />
